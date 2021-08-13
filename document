@@ -1,0 +1,254 @@
+Raw Code Home Screen 
+
+Start 
+
+import {
+  Animated,
+  Dimensions,
+  FlatList,
+  Image,
+  LogBox,
+  Share,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native'
+import { HeaderButtons, Item } from 'react-navigation-header-buttons'
+import React, { useEffect } from 'react'
+
+import Color from '../colors/Color'
+import HeaderButton from '../components/headerButton/HeaderButton'
+import HeaderLogo from '../components/headerLogo/HeaderLogo'
+import HomeCategories from '../components/homeScreen/HomeCategories'
+import axios from 'axios'
+
+let { width: screenWidth, height: screenHeight } = Dimensions.get('window')
+
+const HEADER_MAX_HEIGHT = 200
+const HEADER_MIN_HEIGHT = 60
+const HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT
+
+const Home = (props) => {
+  LogBox.ignoreLogs(['Animated.event', 'Your project is accessing'])
+  const [homeServices, setServices] = React.useState([])
+  // useEffect(() => {
+  //   const fetchPackeges = async () => {
+  //     try {
+  //       const { data } = await axios
+  //         .get
+  //         `https://digipremier.herokuapp.com/api/service/all`
+  //         ()
+  //       setServices(data)
+  //     } catch (err) {
+  //       console.log(err)
+  //     }
+  //   }
+  //   fetchPackeges()
+  // }, [])
+  const scrollY = new Animated.Value(0)
+  const headerHeight = scrollY.interpolate({
+    inputRange: [0, HEADER_SCROLL_DISTANCE],
+    outputRange: [0, 1],
+    extrapolate: 'clamp',
+    useNativeDriver: false,
+  })
+
+  const servicesHeader = () => {
+    return (
+      <View
+        style={{
+          backgroundColor: '#fff',
+          width: screenWidth,
+          height: screenHeight,
+        }}
+      >
+        <View
+          style={{
+            width: screenWidth,
+            height: screenHeight / 1.8,
+            backgroundColor: Color.secondaryColor,
+            // borderTopLeftRadius: 290,
+            borderTopWidth: 80,
+            borderRightWidth: 70,
+            borderColor: Color.primaryColour,
+            borderTopRightRadius: 200,
+            // borderBottomRightRadius: 320,
+            // borderBottomLeftRadius: 80,
+            // borderRadius: '(57% 43% 78% 22%)' / '(42% 34% 66% 58%)',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <View
+            style={{
+              width: screenWidth,
+              height: screenHeight / 3,
+              justifyContent: 'center',
+              alignItems: 'center',
+              position: 'absolute',
+            }}
+          >
+            <Text
+              style={{
+                color: '#fff',
+                fontSize: 24,
+                fontFamily: 'open-sans-bold',
+                textAlign: 'center',
+              }}
+            >
+              PRO Services & All Banking Solutions One Window Operations
+            </Text>
+          </View>
+        </View>
+
+        {/* <View
+          style={{
+            width: screenWidth,
+            height: screenHeight / 1.8,
+            backgroundColor: Color.accentColour,
+            // borderTopLeftRadius: 290,
+            // borderTopRightRadius: 290,
+            borderBottomRightRadius: 320,
+            borderBottomLeftRadius: 80,
+            // borderRadius: '(57% 43% 78% 22%)' / '(42% 34% 66% 58%)',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <View
+            style={{
+              width: screenWidth,
+              height: screenHeight / 3,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <Text
+              style={{
+                color: '#fff',
+                fontSize: 24,
+                fontFamily: 'open-sans-bold',
+                textAlign: 'center',
+              }}
+            >
+              PRO Services & All Banking Solutions One Window Operations
+            </Text>
+          </View>
+        </View> */}
+      </View>
+    )
+  }
+  const renderItem = (itemData) => {
+    return (
+      <HomeCategories
+        title={itemData.item.slug}
+        serviceLogo={itemData.item.icon}
+        onSelect={() => {
+          props.navigation.navigate({
+            routeName: 'Home_Services',
+            params: {
+              serId: itemData.item._id,
+              serTitle: itemData.item.slug,
+              serImage: itemData.item.image,
+            },
+          })
+        }}
+      />
+    )
+  }
+  return (
+    <>
+      <View style={{ flex: 1 }}>
+        <FlatList
+          data={homeServices}
+          keyExtractor={(item) => item._id}
+          renderItem={renderItem}
+          ListHeaderComponent={servicesHeader}
+          scrollEventThrottle={16}
+          onScroll={Animated.event([
+            { nativeEvent: { contentOffset: { y: scrollY } } },
+          ])}
+          numColumns={2}
+        />
+        <Animated.View opacity={headerHeight} style={[styles.header]}>
+          <View style={styles.bar}>
+            <HeaderLogo />
+          </View>
+        </Animated.View>
+      </View>
+    </>
+  )
+}
+
+Home.navigationOptions = (navData) => {
+  return {
+    headerTitle: ' ',
+    headerLeft: () => (
+      <HeaderButtons HeaderButtonComponent={HeaderButton}>
+        <Item
+          title='Menu'
+          iconName='ios-menu'
+          onPress={() => {
+            navData.navigation.toggleDrawer()
+          }}
+        />
+      </HeaderButtons>
+    ),
+    headerRight: () => (
+      <HeaderButtons HeaderButtonComponent={HeaderButton}>
+        <Item
+          iconName='share-social-sharp'
+          onPress={() => {
+            Share.share({
+              title: 'Paradisegoc App',
+              message:
+                'https://reactnative.dev/docs/share' +
+                '\nHy! Happy to see you!',
+            })
+              .then((res) => console.log(res))
+              .catch((error) => console.log(error))
+          }}
+        />
+      </HeaderButtons>
+    ),
+  }
+}
+export default Home
+
+const styles = StyleSheet.create({
+  fill: {
+    flex: 1,
+  },
+  row: {
+    height: 40,
+    margin: 16,
+    backgroundColor: '#D3D3D3',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  header: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    backgroundColor: '#fff',
+    overflow: 'hidden',
+  },
+  bar: {
+    marginTop: 28,
+    height: 45,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  title: {
+    backgroundColor: 'transparent',
+    color: 'white',
+    fontSize: 18,
+    fontFamily: 'open-sans-bold',
+  },
+  scrollViewContent: {
+    marginTop: 0,
+  },
+})
+
+************ End ************

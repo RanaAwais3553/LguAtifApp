@@ -1,0 +1,30 @@
+{
+  "expo": {
+    "name": "frontEnd",
+    "slug": "frontEnd",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.jpg",
+    "splash": {
+      "image": "./assets/splash.jpg",
+      "resizeMode": "contain",
+      "backgroundColor": "#fff"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/icon.jpg",
+        "backgroundColor": "#121212"
+      }
+    },
+    "web": {
+      "favicon": "./assets/icon.jpg"
+    }
+  }
+}
