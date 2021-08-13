@@ -29,30 +29,30 @@ import { logOut } from "../store/action/authAction";
 
 const MainDrawerNavigator = createDrawerNavigator(
   {
-    HomeScreen: {
-      screen: HomeStackNavigation,
-      navigationOptions: {
-        drawerIcon: () => (
-          <Ionicons name="home" size={25} color={Color.secondaryColor} />
-        ),
-
-        drawerLabel: "Home",
-      },
-    },
-
-    // Testimonial: {
-    //   screen: TestmonialStackNavigation,
+    // HomeScreen: {
+    //   screen: HomeStackNavigation,
     //   navigationOptions: {
     //     drawerIcon: () => (
-    //       <Ionicons
-    //         name="thumbs-up-sharp"
-    //         size={25}
-    //         color={Color.secondaryColor}
-    //       />
+    //       <Ionicons name="home" size={25} color={Color.secondaryColor} />
     //     ),
-    //     drawerLabel: "Our Projects",
+
+    //     drawerLabel: "Home",
     //   },
     // },
+
+    Testimonial: {
+      screen: TestmonialStackNavigation,
+      navigationOptions: {
+        drawerIcon: () => (
+          <Ionicons
+            name="thumbs-up-sharp"
+            size={25}
+            color={Color.secondaryColor}
+          />
+        ),
+        drawerLabel: "Student Map",
+      },
+    },
     Portfolio: {
       screen: PortfolioStackNavigation,
       navigationOptions: {
@@ -196,30 +196,30 @@ const MainDrawerNavigator = createDrawerNavigator(
 
 const EndUserDrawerNavigator = createDrawerNavigator(
   {
-    HomeScreen: {
-      screen: HomeStackNavigation,
-      navigationOptions: {
-        drawerIcon: () => (
-          <Ionicons name="home" size={25} color={Color.secondaryColor} />
-        ),
-
-        drawerLabel: "Home",
-      },
-    },
-
-    // Testimonial: {
-    //   screen: TestmonialStackNavigation,
+    // HomeScreen: {
+    //   screen: HomeStackNavigation,
     //   navigationOptions: {
     //     drawerIcon: () => (
-    //       <Ionicons
-    //         name="thumbs-up-sharp"
-    //         size={25}
-    //         color={Color.secondaryColor}
-    //       />
+    //       <Ionicons name="home" size={25} color={Color.secondaryColor} />
     //     ),
-    //     drawerLabel: "Our Projects",
+
+    //     drawerLabel: "Home",
     //   },
     // },
+
+    Testimonial: {
+      screen: TestmonialStackNavigation,
+      navigationOptions: {
+        drawerIcon: () => (
+          <Ionicons
+            name="thumbs-up-sharp"
+            size={25}
+            color={Color.secondaryColor}
+          />
+        ),
+        drawerLabel: "Student Map",
+      },
+    },
     Portfolio: {
       screen: PortfolioStackNavigation,
       navigationOptions: {
@@ -293,7 +293,12 @@ const EndUserDrawerNavigator = createDrawerNavigator(
             >
               <View style={styles.drawerLogo}>
                 <Image
-                  style={{ flex: 1, width: "100%", resizeMode: "contain" }}
+                  style={{
+                    //   flex: 1,
+                    width: "70%",
+                    resizeMode: "stretch",
+                    height: 130,
+                  }}
                   source={require("../assets/logo.jpg")}
                 />
               </View>

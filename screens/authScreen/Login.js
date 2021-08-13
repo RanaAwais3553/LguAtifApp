@@ -1,4 +1,4 @@
-import * as authActions from '../../store/action/authAction'
+import * as authActions from "../../store/action/authAction";
 
 import {
   ActivityIndicator,
@@ -13,90 +13,88 @@ import {
   Text,
   TouchableOpacity,
   View,
-} from 'react-native'
-import React, { useCallback, useEffect, useReducer, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+} from "react-native";
+import React, { useCallback, useEffect, useReducer, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-import Color from '../../colors/Color'
-import Input from './Input'
+import Color from "../../colors/Color";
+import Input from "./Input";
 
 //import AsyncStorage from '@react-native-async-storage/async-storage'
 
-
-
-const FORM_INPUT_UPDATE = 'FORM_INPUT_UPDATE'
-const screenWidth = Dimensions.get('screen').width
-const screenHeight = Dimensions.get('screen').height
+const FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE";
+const screenWidth = Dimensions.get("screen").width;
+const screenHeight = Dimensions.get("screen").height;
 
 const formReducer = (state, action) => {
   if (action.type === FORM_INPUT_UPDATE) {
     const updatedValues = {
       ...state.inputValues,
       [action.input]: action.value,
-    }
+    };
     const updatedValidities = {
       ...state.inputValidities,
       [action.input]: action.isValid,
-    }
-    let updatedFormIsValid = true
+    };
+    let updatedFormIsValid = true;
     for (const key in updatedValidities) {
-      updatedFormIsValid = updatedFormIsValid && updatedValidities[key]
+      updatedFormIsValid = updatedFormIsValid && updatedValidities[key];
     }
     return {
       formIsValid: updatedFormIsValid,
       inputValidities: updatedValidities,
       inputValues: updatedValues,
-    }
+    };
   }
-  return state
-}
+  return state;
+};
 
 const Login = (props) => {
-  LogBox.ignoreLogs(['Setting a timer for a'])
-  const [error, setError] = useState()
-  const [isLoading, setIsLoading] = useState(false)
+  LogBox.ignoreLogs(["Setting a timer for a"]);
+  const [error, setError] = useState();
+  const [isLoading, setIsLoading] = useState(false);
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const [formState, dispatchFormState] = useReducer(formReducer, {
     inputValues: {
-      email: '',
-      password: '',
+      email: "",
+      password: "",
     },
     inputValidities: {
       email: false,
       password: false,
     },
     formIsValid: false,
-  })
+  });
   useEffect(() => {
     if (error) {
-      Alert.alert('An Error Occurred!', error, [{ text: 'Okay' }])
+      Alert.alert("An Error Occurred!", error, [{ text: "Okay" }]);
     }
-  }, [error])
+  }, [error]);
   const loginHandler = async () => {
-    setError(null)
-    setIsLoading(true)
+    setError(null);
+    setIsLoading(true);
     try {
       await dispatch(
         authActions.login(
           formState.inputValues.email,
           formState.inputValues.password
         )
-      )
-      const userData = await AsyncStorage.getItem('userData')
-      const transformedData = JSON.parse(userData)
-      const { token, userId, expiryDate } = transformedData
-      if (userId === 'kp19Dv61D1RUIcYm1ZgJLG4Sw0b2') {
-        props.navigation.navigate('appScreen')
+      );
+      const userData = await AsyncStorage.getItem("userData");
+      const transformedData = JSON.parse(userData);
+      const { token, userId, expiryDate } = transformedData;
+      if (userId === "7OCALBqwUxPakjdOlXF1OHZIw7a2") {
+        props.navigation.navigate("appScreen");
       } else {
-        props.navigation.navigate('userScreen')
+        props.navigation.navigate("userScreen");
       }
     } catch (err) {
-      setError(err.message)
-      setIsLoading(false)
+      setError(err.message);
+      setIsLoading(false);
     }
-  }
+  };
 
   const inputChangeHandler = useCallback(
     (inputIdentifier, inputValue, inputValidity) => {
@@ -105,10 +103,10 @@ const Login = (props) => {
         value: inputValue,
         isValid: inputValidity,
         input: inputIdentifier,
-      })
+      });
     },
     [dispatchFormState]
-  )
+  );
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -117,25 +115,25 @@ const Login = (props) => {
           <View
             style={{
               width: screenWidth / 2.5,
-              justifyContent: 'flex-start',
+              justifyContent: "flex-start",
               height: screenHeight / 6,
-              alignItems: 'center',
+              alignItems: "center",
             }}
           >
             <Image
               style={{
-                resizeMode: 'contain',
+                resizeMode: "contain",
                 width: screenWidth / 2,
-                height: screenHeight / 3,
+                height: screenHeight / 3.5,
               }}
-              source={require('../../assets/logo.png')}
+              source={require("../../assets/logo.jpg")}
             />
           </View>
           <View style={styles.header}>
             <Text
               style={{
-                color: '#121212',
-                fontWeight: 'bold',
+                color: "#121212",
+                fontWeight: "bold",
                 fontSize: 25,
               }}
             >
@@ -144,7 +142,7 @@ const Login = (props) => {
             <Text
               style={{
                 color: Color.accentColour,
-                fontWeight: '700',
+                fontWeight: "700",
               }}
             >
               Sign in to continue
@@ -163,14 +161,14 @@ const Login = (props) => {
             </Text>
             <View style={styles.action}>
               <Input
-                id='email'
-                keyboardType='email-address'
+                id="email"
+                keyboardType="email-address"
                 required
                 email
-                autoCapitalize='none'
-                errorText='Please enter a valid email address.'
+                autoCapitalize="none"
+                errorText="Please enter a valid email address."
                 onInputChange={inputChangeHandler}
-                initialValue=''
+                initialValue=""
                 style={styles.textInput}
               />
             </View>
@@ -187,20 +185,20 @@ const Login = (props) => {
             </Text>
             <View style={styles.action}>
               <Input
-                id='password'
-                keyboardType='default'
+                id="password"
+                keyboardType="default"
                 secureTextEntry
                 required
                 minLength={5}
-                autoCapitalize='none'
-                errorText='Please enter a valid password.'
+                autoCapitalize="none"
+                errorText="Please enter a valid password."
                 onInputChange={inputChangeHandler}
-                initialValue=''
+                initialValue=""
                 style={styles.textInput}
               />
             </View>
             {isLoading ? (
-              <ActivityIndicator size={'large'} color='#f57842' />
+              <ActivityIndicator size={"large"} color="#f57842" />
             ) : (
               <Text> </Text>
             )}
@@ -213,14 +211,14 @@ const Login = (props) => {
             </TouchableOpacity>
 
             <View style={styles.signUp}>
-              <Text style={{ color: 'black' }}>New User?</Text>
+              <Text style={{ color: "black" }}>New User?</Text>
               <Text
                 onPress={() => {
-                  props.navigation.navigate('Sign_Up')
+                  props.navigation.navigate("Sign_Up");
                 }}
-                style={{ color: Color.accentColour, fontWeight: '700' }}
+                style={{ color: Color.accentColour, fontWeight: "700" }}
               >
-                {' '}
+                {" "}
                 Sign Up
               </Text>
             </View>
@@ -228,50 +226,50 @@ const Login = (props) => {
         </View>
       </ScrollView>
     </SafeAreaView>
-  )
-}
-export default Login
+  );
+};
+export default Login;
 
-const height = Dimensions.get('screen').height
+const height = Dimensions.get("screen").height;
 var styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: "white",
+    justifyContent: "center",
+    alignItems: "center",
   },
   header: {
     height: height / 7,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   footer: {
     height: height / 1.3,
     padding: 20,
   },
   imageBackground: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    resizeMode: 'stretch',
-    width: '80%',
+    justifyContent: "center",
+    alignItems: "center",
+    resizeMode: "stretch",
+    width: "80%",
     height: height / 3,
   },
   title: {
-    color: 'black',
-    fontWeight: 'bold',
+    color: "black",
+    fontWeight: "bold",
   },
   action: {
-    flexDirection: 'row',
+    flexDirection: "row",
     borderBottomWidth: 1,
-    borderBottomColor: '#f2f2f2',
+    borderBottomColor: "#f2f2f2",
   },
   textInput: {
     flex: 1,
-    color: 'gray',
+    color: "gray",
   },
   button_container: {
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   animation: {
     backgroundColor: Color.primaryColour,
@@ -279,23 +277,23 @@ var styles = StyleSheet.create({
     paddingVertical: 10,
     marginTop: 20,
     borderRadius: 100,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   textLogin: {
-    color: 'white',
-    fontWeight: 'bold',
+    color: "white",
+    fontWeight: "bold",
     fontSize: 18,
   },
   signUp: {
-    flexDirection: 'row',
-    justifyContent: 'center',
+    flexDirection: "row",
+    justifyContent: "center",
     marginTop: 20,
   },
-})
+});
 
 Login.navigationOptions = () => {
   return {
-    headerTitle: ' ',
-  }
-}
+    headerTitle: " ",
+  };
+};

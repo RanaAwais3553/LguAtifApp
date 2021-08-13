@@ -9,8 +9,9 @@ function HeaderLogo() {
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
       <Image
         style={{
-          resizeMode: "contain",
-          width: screenWidth / 2.5,
+          resizeMode: "stretch",
+          width: screenWidth / 3.7,
+          height: 50,
           justifyContent: "center",
           // marginTop: 3,
         }}
