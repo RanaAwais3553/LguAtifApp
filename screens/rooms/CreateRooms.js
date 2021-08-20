@@ -20,29 +20,29 @@ import Color from "../../colors/Color";
 import HeaderButton from "../../components/headerButton/HeaderButton";
 import HeaderLogo from "../../components/headerLogo/HeaderLogo";
 import SocialMediaIcon from "../../components/socialIcon/SocialMediaIcon";
-import { createContactForm } from "../../store/action/contactAction";
+import { createContactForm } from "../../store/action/roomAction";
 
 const screenWidth = Dimensions.get("screen").width;
 
-function ContactUs() {
-  const [name, setName] = useState("");
-  const [phoneNum, setPhoneNum] = useState("");
-  const [message, setMessage] = useState("");
+function CreateRooms() {
+  const [title, setTitle] = useState("");
+  const [roomNum, setRoomNum] = useState("");
+  const [description, setDescription] = useState("");
 
   const dispatch = useDispatch();
-  const userEmail = useSelector((state) => state.auth.email);
+
   const submitHandler = useCallback(() => {
-    if (name === "" || phoneNum === "" || userEmail === "" || message === "") {
+    if (title === "" || roomNum === "" || description === "") {
       Alert.alert("Please enter all input fields");
     } else {
-      dispatch(createContactForm(name, phoneNum, userEmail, message));
+      dispatch(createContactForm(title, roomNum, description));
       Alert.alert("Message submitted successfully!!");
       setName("");
 
       setMessage("");
       setPhoneNum("");
     }
-  }, [dispatch, name, phoneNum, userEmail, message]);
+  }, [dispatch, title, roomNum, description]);
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -54,7 +54,7 @@ function ContactUs() {
               width: screenWidth,
               resizeMode: "stretch",
             }}
-            source={require("../../assets/applynow.jpg")}
+            source={require("../../assets/Admissionscaled.jpg")}
           />
           <View
             style={{
@@ -66,11 +66,11 @@ function ContactUs() {
           >
             <View style={[styles.footer, {}]}>
               <View style={styles.formControl}>
-                <Text style={styles.label}>Name</Text>
+                <Text style={styles.label}>Room Title</Text>
                 <TextInput
                   style={styles.input}
                   // value={name}
-                  onChangeText={(name) => setName(name)}
+                  onChangeText={(name) => setTitle(name)}
                   keyboardType="default"
                   autoCapitalize="sentences"
                   autoCorrect
@@ -79,10 +79,10 @@ function ContactUs() {
               </View>
 
               <View style={styles.formControl}>
-                <Text style={styles.label}>Phone</Text>
+                <Text style={styles.label}>Enter Room Number</Text>
                 <TextInput
                   style={styles.input}
-                  onChangeText={(phoneNum) => setPhoneNum(phoneNum)}
+                  onChangeText={(roomNum) => setRoomNum(roomNum)}
                   keyboardType="number-pad"
                   autoCapitalize="sentences"
                   autoCorrect
@@ -91,24 +91,10 @@ function ContactUs() {
               </View>
 
               <View style={styles.formControl}>
-                <Text style={styles.label}>Email</Text>
-                <TextInput
-                  style={[styles.input, { fontWeight: "700" }]}
-                  // onChangeText={(email) => setEmail(email)}
-                  keyboardType="email-address"
-                  autoCapitalize="sentences"
-                  autoCorrect
-                  returnKeyType="next"
-                  value={userEmail}
-                  editable={false}
-                />
-              </View>
-
-              <View style={styles.formControl}>
-                <Text style={styles.label}>Message</Text>
+                <Text style={styles.label}>Description</Text>
                 <TextInput
                   style={styles.input}
-                  onChangeText={(message) => setMessage(message)}
+                  onChangeText={(description) => setDescription(description)}
                   keyboardType="default"
                   autoCapitalize="sentences"
                   autoCorrect
@@ -140,22 +126,6 @@ function ContactUs() {
                   onPress={submitHandler}
                 />
               </View>
-              <View
-                style={{
-                  paddingTop: StatusBar.currentHeight,
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <SocialMediaIcon
-                  facebookSocial="https://www.facebook.com/PRO-GCC-107895398113832"
-                  twitterSocial="https://twitter.com/ProGCC2"
-                  linkedInSocial="https://www.linkedin.com/company/pro-gcc/"
-                  instagramSocial="https://www.instagram.com/progcc1/"
-                  websiteSocial="https://www.progcc.org/"
-                  pintrestSocial="https://www.pinterest.com/progccofficial/"
-                />
-              </View>
             </View>
           </View>
         </View>
@@ -163,7 +133,7 @@ function ContactUs() {
     </SafeAreaView>
   );
 }
-ContactUs.navigationOptions = (navData) => {
+CreateRooms.navigationOptions = (navData) => {
   return {
     headerTitle: () => <HeaderLogo />,
     headerLeft: () => (
@@ -180,7 +150,7 @@ ContactUs.navigationOptions = (navData) => {
   };
 };
 
-export default ContactUs;
+export default CreateRooms;
 const height = Dimensions.get("screen").height;
 var styles = StyleSheet.create({
   container: {

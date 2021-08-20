@@ -15,7 +15,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import {
   deleteContactUser,
   fetchContactFormData,
-} from "../../store/action/contactAction";
+} from "../../store/action/roomAction";
 import { useDispatch, useSelector } from "react-redux";
 
 import Color from "../../colors/Color";
@@ -24,11 +24,11 @@ import HeaderButton from "../../components/headerButton/HeaderButton";
 const screenWidth = Dimensions.get("screen").width;
 const screenHeight = Dimensions.get("screen").height;
 
-function ContactUserList(props) {
+function RoomsList(props) {
   const [error, setError] = useState();
   const [isLoading, setIsloading] = useState(false);
   const dispatch = useDispatch();
-  const usersArray = useSelector((state) => state.contactUsers.availableUsers);
+  const usersArray = useSelector((state) => state.room.availableUsers);
 
   const loadedUserData = useCallback(async () => {
     setError(null);
@@ -104,7 +104,7 @@ function ContactUserList(props) {
         }}
       >
         {usersArray.map((item, i) => {
-          console.log(item.id, item.name);
+          console.log(item.id);
           return (
             <View
               key={i}
@@ -138,7 +138,7 @@ function ContactUserList(props) {
                       fontWeight: "700",
                     }}
                   >
-                    {item.name}
+                    {item.title}
                   </Text>
                   <Text
                     style={{
@@ -147,13 +147,10 @@ function ContactUserList(props) {
                       lineHeight: 23.3,
                     }}
                   >
-                    {item.message}
+                    {item.roomNum}
                   </Text>
-                  <Text style={{ fontSize: 16, fontWeight: "700" }}>
-                    {item.email}
-                  </Text>
-                  <Text style={{ fontSize: 16, fontWeight: "500" }}>
-                    {item.mobile}
+                  <Text style={{ fontSize: 16, fontWeight: "400" }}>
+                    {item.description}
                   </Text>
                 </View>
                 <View
@@ -180,7 +177,7 @@ function ContactUserList(props) {
   );
 }
 
-ContactUserList.navigationOptions = (navData) => {
+RoomsList.navigationOptions = (navData) => {
   return {
     headerTitle: "User List",
     headerLeft: () => (
@@ -213,4 +210,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ContactUserList;
+export default RoomsList;

@@ -14,18 +14,18 @@ import HeaderLogo from "../../components/headerLogo/HeaderLogo";
 import MapPreview from "../../components/mapPreview/MapPreview";
 import React from "react";
 
-const TestMonial = (props) => {
+const TimeTableMain = (props) => {
   LogBox.ignoreLogs(["Your project is accessing the following APIs"]);
   return (
     <View style={{ flex: 1 }}>
-      <MapPreview />
-      {/* <Grid /> */}
+      {/* <MapPreview /> */}
+      <Grid />
     </View>
   );
 };
 
-export default TestMonial;
-TestMonial.navigationOptions = (navData) => {
+export default TimeTableMain;
+TimeTableMain.navigationOptions = (navData) => {
   return {
     headerTitle: () => <HeaderLogo />,
     headerLeft: () => (

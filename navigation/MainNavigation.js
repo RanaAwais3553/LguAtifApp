@@ -17,14 +17,18 @@ import { Button } from "react-native-elements";
 import Color from "../colors/Color";
 import ContactUsStackNavigation from "./stackNavigation/ContactUsStackNavigation";
 import ContactUserListStackNavigation from "./stackNavigation/ContactUserList";
+import CreateRoomsStackNavigation from "./stackNavigation/CreateRoomsStackNavigation";
+import DisplayTimeTableStackNavigation from "./stackNavigation/DisplayTimTableStackNavigation";
 import HomeStackNavigation from "./stackNavigation/HomeStackNavigation";
 import { Ionicons } from "@expo/vector-icons";
 import PortfolioStackNavigation from "./stackNavigation/PortfolioStackNavigation";
 import React from "react";
+import RoomsStackNavigation from "./stackNavigation/RoomsListStackNavigation";
 import { ScrollView } from "react-native-gesture-handler";
 import StartupScreen from "../screens/startupScreen/StartupScreen";
 import TermandConditionStackNavigation from "./stackNavigation/TermandConditionStackNavigation";
 import TestmonialStackNavigation from "./stackNavigation/TestmonialStackNavigation";
+import TimeTableMainStackNavigation from "./stackNavigation/TimeTableMainStackNavigation";
 import { logOut } from "../store/action/authAction";
 
 const MainDrawerNavigator = createDrawerNavigator(
@@ -51,6 +55,59 @@ const MainDrawerNavigator = createDrawerNavigator(
           />
         ),
         drawerLabel: "Student Map",
+      },
+    },
+
+    Rooms_List: {
+      screen: RoomsStackNavigation,
+      navigationOptions: {
+        drawerIcon: () => (
+          <Ionicons
+            name="thumbs-up-sharp"
+            size={25}
+            color={Color.secondaryColor}
+          />
+        ),
+        drawerLabel: "Rooms",
+      },
+    },
+    TimeTableMain: {
+      screen: TimeTableMainStackNavigation,
+      navigationOptions: {
+        drawerIcon: () => (
+          <Ionicons
+            name="thumbs-up-sharp"
+            size={25}
+            color={Color.secondaryColor}
+          />
+        ),
+        drawerLabel: "Create Schedule",
+      },
+    },
+    CreateRooms: {
+      screen: CreateRoomsStackNavigation,
+      navigationOptions: {
+        drawerIcon: () => (
+          <Ionicons
+            name="thumbs-up-sharp"
+            size={25}
+            color={Color.secondaryColor}
+          />
+        ),
+        drawerLabel: "Create Rooms",
+      },
+    },
+    DisplayTimeTable: {
+      screen: DisplayTimeTableStackNavigation,
+      navigationOptions: {
+        drawerIcon: () => (
+          <Ionicons
+            name="thumbs-up-sharp"
+            size={25}
+            color={Color.secondaryColor}
+          />
+        ),
+        drawerLabel: "TimeTable",
       },
     },
     Portfolio: {
@@ -196,17 +253,6 @@ const MainDrawerNavigator = createDrawerNavigator(
 
 const EndUserDrawerNavigator = createDrawerNavigator(
   {
-    // HomeScreen: {
-    //   screen: HomeStackNavigation,
-    //   navigationOptions: {
-    //     drawerIcon: () => (
-    //       <Ionicons name="home" size={25} color={Color.secondaryColor} />
-    //     ),
-
-    //     drawerLabel: "Home",
-    //   },
-    // },
-
     Testimonial: {
       screen: TestmonialStackNavigation,
       navigationOptions: {
@@ -218,6 +264,34 @@ const EndUserDrawerNavigator = createDrawerNavigator(
           />
         ),
         drawerLabel: "Student Map",
+      },
+    },
+
+    Rooms_List: {
+      screen: RoomsStackNavigation,
+      navigationOptions: {
+        drawerIcon: () => (
+          <Ionicons
+            name="thumbs-up-sharp"
+            size={25}
+            color={Color.secondaryColor}
+          />
+        ),
+        drawerLabel: "Rooms",
+      },
+    },
+
+    DisplayTimeTable: {
+      screen: DisplayTimeTableStackNavigation,
+      navigationOptions: {
+        drawerIcon: () => (
+          <Ionicons
+            name="thumbs-up-sharp"
+            size={25}
+            color={Color.secondaryColor}
+          />
+        ),
+        drawerLabel: "TimeTable",
       },
     },
     Portfolio: {
